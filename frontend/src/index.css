@@ -1,1 +1,54 @@
 @import "tailwindcss";
+
+@theme {
+  /* Brand Colors */
+  --color-primary: #4F46E5;
+  --color-primary-hover: #4338CA;
+  --color-primary-light: #EEF2FF;
+
+  /* Background Colors */
+  --color-page: #F9FAFB;
+  --color-surface: #FFFFFF;
+
+  /* Text Colors */
+  --color-ink: #111827;
+  --color-muted: #6B7280;
+  --color-subtle: #9CA3AF;
+
+  /* Badge tones: backgrounds */
+--color-tone-blue-bg: #DBEAFE;
+--color-tone-purple-bg: #EDE9FE;
+--color-tone-amber-bg: #FEF3C7;
+--color-tone-green-bg: #DCFCE7;
+--color-tone-red-bg: #FEE2E2;
+--color-tone-gray-bg: #F3F4F6;
+
+/* Badge tones: text */
+--color-tone-blue-text: #1E40AF;
+--color-tone-purple-text: #5B21B6;
+--color-tone-amber-text: #92400E;
+--color-tone-green-text: #166534;
+--color-tone-red-text: #991B1B;
+--color-tone-gray-text: #374151;
+
+/* Additional component tokens */
+--color-line-strong: #D1D5DB;
+--color-danger-hover: #B91C1C;
+--color-disabled-bg: #E5E7EB;
+--color-disabled-text: #6B7280;
+
+  /* Border Colors */
+  --color-line: #E5E7EB;
+
+  /* Status Colors */
+  --color-success: #16A34A;
+  --color-warning: #D97706;
+  --color-danger: #DC2626;
+
+  /* Focus Ring */
+  --color-focus: #A5B4FC;
+
+  /* Border Radius */
+  --radius-card: 0.75rem;
+  --radius-button: 0.5rem;
+}
