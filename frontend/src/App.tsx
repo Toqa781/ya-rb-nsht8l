@@ -1,4 +1,5 @@
 import MainLayout from "./Components/MainLayout";
+import Display from "./Pages/Display";
 import DashboardPage from "./Pages/DashboardPage";
 import ApplicationsPage from "./Pages/ApplicationsPage";
 import TasksPage from "./Pages/TasksPage";
@@ -10,7 +11,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<MainLayout />}>
-          <Route path="/" element={<DashboardPage />} />
+          <Route path="/" element={<Display />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/applications" element={<ApplicationsPage />} />
           <Route path="/tasks" element={<TasksPage />} />
           <Route path="/settings" element={<SettingsPage />} />
