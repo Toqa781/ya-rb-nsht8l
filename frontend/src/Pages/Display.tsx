@@ -3,7 +3,7 @@ import Input from "../Components/UI/Input";
 import Card from "../Components/UI/Card";
 import Badge from "../Components/UI/Badge";
 
-function DashboardPage() {
+function Display() {
   return (
     <div className="space-y-6">
 
@@ -109,4 +109,4 @@ function DashboardPage() {
   );
 }
 
-export default DashboardPage;
+export default Display;
