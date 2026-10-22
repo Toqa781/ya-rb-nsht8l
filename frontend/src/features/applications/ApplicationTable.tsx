@@ -1,9 +1,19 @@
 import type { Application} from "./type";
+import Badge, { type BadgeTone } from "../../Components/UI/Badge";
 
 type ApplicationTableProps={
     applications: Application[];
 }
-
+const statusTones: Record<Application["status"], BadgeTone> = {
+  Applied: "blue",
+  Interview: "amber",
+  Assessment: "purple",
+  Offer: "green",
+  Rejected: "red",
+  Saved: "gray",
+  Withdrawn: "gray",
+  "No Response": "gray",
+};
 function ApplicationTable({applications}:ApplicationTableProps){
     return(
         <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white">
@@ -52,7 +62,9 @@ function ApplicationTable({applications}:ApplicationTableProps){
                             </td>
 
                             <td className="px-4 py-3 text-gray-700">
+                                <Badge tone={statusTones[app.status]}>
                                 {app.status}
+                                </Badge>
                             </td>
 
                         </tr>
