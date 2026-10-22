@@ -1,3 +1,5 @@
+//displays the tabs and tells the parent when someone clicks a tab
+
 import type { ApplicationTab } from "./type";
 
 type ApplicationFiltersProps = {
@@ -6,7 +8,7 @@ type ApplicationFiltersProps = {
   onTabChange: (tab: ApplicationTab) => void;
 };
 
-const tabs: ApplicationTab[] = ["All", "Active", "Archived"];
+const tabs: ApplicationTab[] = ["All", "Active", "Archived",]; //The array gives us the items we want to display.
 
 function ApplicationFilters({
   activeTab,

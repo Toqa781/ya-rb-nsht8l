@@ -1,8 +1,10 @@
+//Owns state, filters data, and sorts results
+
 import { mockApplications } from "../features/applications/mockData";
 import ApplicationTable from "../features/applications/ApplicationTable";
-import React, { useState } from "react";
+import React, { useState } from "react"; //Stores values that change as the user interacts with the page.
 import type { Application, ApplicationTab } from "../features/applications/type";
-import ApplicationFilters from "../features/applications/ApplicationFilters";
+import ApplicationFilters from "../features/applications/ApplicationFilters"; //Displays the tabs and counts.
 
 const archivedStatuses = new Set(["Rejected", "Withdrawn", "No Response"]);
 
