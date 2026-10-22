@@ -2,7 +2,8 @@ import { useLocation } from "react-router-dom";
 
 // Map URLs to page names
 const pageNames: Record<string, string> = {
-  "/": "Dashboard",
+  "/": "Display",
+  "/dashboard": "Dashboard",
   "/applications": "Applications",
   "/tasks": "Tasks",
   "/settings": "Settings",
@@ -64,7 +65,7 @@ function Header() {
         <button
           type="button"
           aria-label="Notifications"
-          className="relative rounded-lg p-2 text-gray-500 transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A5B4FC]"
+          className="relative rounded-lg p-2 text-gray-500 transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(165,180,252)]"
         >
           {/* Bell Icon */}
           <svg
