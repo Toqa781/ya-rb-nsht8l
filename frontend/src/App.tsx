@@ -4,6 +4,7 @@ import DashboardPage from "./Pages/DashboardPage";
 import ApplicationsPage from "./Pages/ApplicationsPage";
 import TasksPage from "./Pages/TasksPage";
 import SettingsPage from "./Pages/SettingsPage";
+import AddApplicationPage from "./Pages/AddApplicationPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/applications" element={<ApplicationsPage />} />
           <Route path="/tasks" element={<TasksPage />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/applications/add" element={<AddApplicationPage />}/>
         </Route>
       </Routes>
     </BrowserRouter>
