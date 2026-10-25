@@ -8,6 +8,7 @@ import AddApplicationPage from "./Pages/AddApplicationPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./Pages/LoginPage";
 import RegisterPage from "./Pages/RegisterPage";
+import EditApplicationPage from "./Pages/EditApplicationPage"
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<Display />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/applications" element={<ApplicationsPage />} />
+          <Route path="/applications/:id/edit" element={<EditApplicationPage/>}/>
           <Route path="/tasks" element={<TasksPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/applications/add" element={<AddApplicationPage />}/>

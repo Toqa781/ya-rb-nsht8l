@@ -11,7 +11,7 @@ export type ApplicationStatus=
 export type ApplicationTab = "All" | "Active" | "Archived";
 
 export interface Application {
-    id:number,
+    id:string,
     companyName: string;
     jobTitle: string;
     location:string;

@@ -20,6 +20,7 @@ type ApplicationFormProps = {
   initialValues: ApplicationFormValues;
   onSubmit: (values: ApplicationFormValues) => void;
   onCancel: () => void;
+  submitLabel?: string;
 };
 
 // One optional error message per form field
@@ -42,7 +43,7 @@ function validate(values: ApplicationFormValues): FormErrors {
   return errors;
 }
 
-function ApplicationForm({ initialValues, onSubmit, onCancel }: ApplicationFormProps) {
+function ApplicationForm({ initialValues, onSubmit, onCancel, submitLabel="Save Application" }: ApplicationFormProps) {
   const [values, setValues] = useState<ApplicationFormValues>(initialValues);
   const [errors, setErrors] = useState<FormErrors>({});
 
@@ -237,7 +238,7 @@ function ApplicationForm({ initialValues, onSubmit, onCancel }: ApplicationFormP
           <Button variant="secondary" onClick={onCancel}>
             Cancel
           </Button>
-          <Button type="submit">Save application</Button>
+          <Button type="submit">{submitLabel}</Button>
         </div>
       </div>
     </form>
