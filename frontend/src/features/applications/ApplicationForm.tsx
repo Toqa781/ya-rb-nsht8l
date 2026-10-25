@@ -1,13 +1,26 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import Button from "../../Components/UI/Button";
 import Card from "../../Components/UI/Card";
+import Badge, {type BadgeTone} from "../../Components/UI/Badge";
 import Input from "../../Components/UI/Input";
 import { statusOptions, type ApplicationFormValues } from "./type";
+
+const statusTones: Record<ApplicationFormValues["status"], BadgeTone> = {
+  Applied: "blue",
+  Interview: "amber",
+  Assessment: "purple",
+  Offer: "green",
+  Rejected: "red",
+  Saved: "gray",
+  Withdrawn: "gray",
+  "No Response": "gray",
+};
 
 type ApplicationFormProps = {
   initialValues: ApplicationFormValues;
   onSubmit: (values: ApplicationFormValues) => void;
   onCancel: () => void;
+  submitLabel?: string;
 };
 
 // One optional error message per form field
@@ -30,7 +43,7 @@ function validate(values: ApplicationFormValues): FormErrors {
   return errors;
 }
 
-function ApplicationForm({ initialValues, onSubmit, onCancel }: ApplicationFormProps) {
+function ApplicationForm({ initialValues, onSubmit, onCancel, submitLabel="Save Application" }: ApplicationFormProps) {
   const [values, setValues] = useState<ApplicationFormValues>(initialValues);
   const [errors, setErrors] = useState<FormErrors>({});
 
@@ -146,21 +159,28 @@ function ApplicationForm({ initialValues, onSubmit, onCancel }: ApplicationFormP
 
           <div className="flex w-full flex-col gap-2">
             <label htmlFor="status" className="text-sm font-medium text-ink">
-              Status
+                Status
             </label>
-            <select
-              id="status"
-              name="status"
-              value={values.status}
-              onChange={handleChange}
-              className={fieldClasses}
-            >
-              {statusOptions.map((status) => (
-                <option key={status} value={status}>
-                  {status}
-                </option>
-              ))}
-            </select>
+
+            <div className="flex items-center gap-3">
+                <select
+                id="status"
+                name="status"
+                value={values.status}
+                onChange={handleChange}
+                className={fieldClasses}
+                >
+                {statusOptions.map((status) => (
+                    <option key={status} value={status}>
+                    {status}
+                    </option>
+                ))}
+                </select>
+
+                <Badge tone={statusTones[values.status]}>
+                {values.status}
+                </Badge>
+            </div>
           </div>
 
           <div className="sm:col-span-2">
@@ -177,7 +197,22 @@ function ApplicationForm({ initialValues, onSubmit, onCancel }: ApplicationFormP
               Paste the original job listing so it's easy to find later.
             </p>
           </div>
-
+          
+          <div className="flex w-full flex-col gap-2 sm:col-span-2">
+            <label htmlFor="jobDescription" className="text-sm font-medium text-ink">
+                Job description
+            </label>
+            <textarea
+                id="jobDescription"
+                name="jobDescription"
+                rows={6}
+                value={values.jobDescription}
+                onChange={handleChange}
+                placeholder="Paste the job requirements and responsibilities..."
+                className={fieldClasses}
+            />
+            <p className="text-xs text-muted">Paste the job requirements, responsibilities, and so on.</p>
+          </div>
           <div className="flex w-full flex-col gap-2 sm:col-span-2">
             <label htmlFor="notes" className="text-sm font-medium text-ink">
               Notes
@@ -203,7 +238,7 @@ function ApplicationForm({ initialValues, onSubmit, onCancel }: ApplicationFormP
           <Button variant="secondary" onClick={onCancel}>
             Cancel
           </Button>
-          <Button type="submit">Save application</Button>
+          <Button type="submit">{submitLabel}</Button>
         </div>
       </div>
     </form>

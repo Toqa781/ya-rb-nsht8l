@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import ApplicationForm from "../features/applications/ApplicationForm";
 import type{ ApplicationFormValues } from "../features/applications/type";
 import ApplicationTips from "../features/applications/ApplicationTips";
+import { loadApplications, saveApplications } from "../features/applications/applicationStorage";
+import { formValuesToApplication } from "../features/applications/applicationMappers";
 
 const emptyValues: ApplicationFormValues={
     companyName:"",
@@ -11,14 +13,16 @@ const emptyValues: ApplicationFormValues={
     appliedOn: new Date().toISOString().slice(0,10),
     status:"Saved",
     listingUrl:"",
+    jobDescription: "",
     notes:""
 };
 function AddApplicationPage() {
     const navigate=useNavigate();
 
     function handleSubmit(values:ApplicationFormValues){
-        console.log("Saving:", values)//temp
-        navigate("/applications");
+        const newApplication=formValuesToApplication(values,crypto.randomUUID());
+        saveApplications([newApplication,...loadApplications()]);
+        navigate("/applications")
     }
     return(
         <div className="space-y-6">

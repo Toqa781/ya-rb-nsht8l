@@ -1,14 +1,23 @@
-//Owns state, filters data, and sorts results
+// Owns the page state, then filters and sorts the list for display
 
-import { mockApplications } from "../features/applications/mockData";
-import ApplicationTable from "../features/applications/ApplicationTable";
-import React, { useState } from "react"; //Stores values that change as the user interacts with the page.
-import type { Application, ApplicationTab } from "../features/applications/type";
-import ApplicationFilters from "../features/applications/ApplicationFilters"; //Displays the tabs and counts.
-import Button from "../Components/UI/Button";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "../Components/UI/Button";
+import ApplicationFilters from "../features/applications/ApplicationFilters";
+import ApplicationTable from "../features/applications/ApplicationTable";
+import { loadApplications } from "../features/applications/applicationStorage";
+import {
+  statusOptions,
+  type Application,
+  type ApplicationStatus,
+  type ApplicationTab,
+} from "../features/applications/type";
 
-const archivedStatuses = new Set(["Rejected", "Withdrawn", "No Response"]);
+const archivedStatuses = new Set<ApplicationStatus>([
+  "Rejected",
+  "Withdrawn",
+  "No Response",
+]);
 
 function isArchived(application: Application): boolean {
   return archivedStatuses.has(application.status);
@@ -16,56 +25,67 @@ function isArchived(application: Application): boolean {
 
 function ApplicationsPage(): React.JSX.Element {
   const navigate = useNavigate();
+
+  // Hooks always live inside the component, at the top.
+  // Passing the function (not calling it) means storage is read only on the first render.
+  const [applications] = useState(loadApplications);
+
   const [activeTab, setActiveTab] = useState<ApplicationTab>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All statuses");
   const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
 
+  // Derived data: calculated from state on every render, never stored in state
   const counts: Record<ApplicationTab, number> = {
-    All: mockApplications.length,
-    Active: mockApplications.filter((application) => !isArchived(application)).length,
-    Archived: mockApplications.filter(isArchived).length,
+    All: applications.length,
+    Active: applications.filter((application) => !isArchived(application)).length,
+    Archived: applications.filter(isArchived).length,
   };
-  
-  const normalizedQuery = searchQuery.trim().toLowerCase();
-  const visibleApplications = mockApplications.filter((application) => {
-    const matchesTab =
-      activeTab === "All" ||
-      (activeTab === "Active" && !isArchived(application)) ||
-      (activeTab === "Archived" && isArchived(application));
-    const matchesSearch =
-      normalizedQuery.length === 0 ||
-      [application.companyName, application.jobTitle].some(
-        (value) => value.toLowerCase().includes(normalizedQuery),
-      );
-    const matchesStatus =
-      statusFilter === "All statuses" || application.status === statusFilter;
 
-    return matchesTab && matchesSearch && matchesStatus;
-  }).sort((first, second) => {
-    const dateDifference =
-      new Date(second.appliedOn).getTime() - new Date(first.appliedOn).getTime();
-    return sortOrder === "newest" ? dateDifference : -dateDifference;
-  });
-  const statuses = [...new Set(mockApplications.map((application) => application.status))].sort();
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+
+  const visibleApplications = applications
+    .filter((application) => {
+      const matchesTab =
+        activeTab === "All" ||
+        (activeTab === "Active" && !isArchived(application)) ||
+        (activeTab === "Archived" && isArchived(application));
+
+      const matchesSearch =
+        normalizedQuery.length === 0 ||
+        [application.companyName, application.jobTitle].some((value) =>
+          value.toLowerCase().includes(normalizedQuery),
+        );
+
+      const matchesStatus =
+        statusFilter === "All statuses" || application.status === statusFilter;
+
+      return matchesTab && matchesSearch && matchesStatus;
+    })
+    // .sort() changes the array it's called on. That's safe here only
+    // because .filter() already returned a new array.
+    .sort((first, second) => {
+      const dateDifference =
+        new Date(second.appliedOn).getTime() - new Date(first.appliedOn).getTime();
+      return sortOrder === "newest" ? dateDifference : -dateDifference;
+    });
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between gap-6">
-      <div>
-        <h1 className="text-3xl font-semibold tracking-tight text-gray-900">
-          Your next chapter, organized.
-        </h1>
+        <div>
+          <h1 className="text-3xl font-semibold tracking-tight text-gray-900">
+            Your next chapter, organized.
+          </h1>
+          <p className="mt-2 text-sm text-gray-500">
+            Every opportunity, every next step. No spreadsheet required.
+          </p>
+        </div>
 
-        <p className="mt-2 text-sm text-gray-500">
-          Every opportunity, every next step. No spreadsheet required.
-        </p>
+        <Button onClick={() => navigate("/applications/add")}>
+          + Add application
+        </Button>
       </div>
-
-      <Button onClick={() => navigate("/applications/add")}>+ Add application</Button>
-    </div>
-      
-
 
       <section className="space-y-5" aria-label="Your applications">
         <ApplicationFilters
@@ -73,6 +93,7 @@ function ApplicationsPage(): React.JSX.Element {
           counts={counts}
           onTabChange={setActiveTab}
         />
+
         <div className="flex flex-col gap-3 sm:flex-row">
           <div className="relative min-w-0 flex-1">
             <label className="sr-only" htmlFor="application-search">
@@ -98,6 +119,7 @@ function ApplicationsPage(): React.JSX.Element {
               value={searchQuery}
             />
           </div>
+
           <label className="sr-only" htmlFor="application-status-filter">
             Filter by status
           </label>
@@ -108,28 +130,31 @@ function ApplicationsPage(): React.JSX.Element {
             value={statusFilter}
           >
             <option>All statuses</option>
-            {statuses.map((status) => (
+            {statusOptions.map((status) => (
               <option key={status}>{status}</option>
             ))}
           </select>
+
           <label className="sr-only" htmlFor="application-sort-order">
             Sort applications
           </label>
           <select
             id="application-sort-order"
             className="min-w-44 rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-700 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
-            onChange={(event) => setSortOrder(event.target.value as "newest" | "oldest")}
+            onChange={(event) =>
+              setSortOrder(event.target.value as "newest" | "oldest")
+            }
             value={sortOrder}
           >
             <option value="newest">Newest first</option>
             <option value="oldest">Oldest first</option>
           </select>
         </div>
+
         <ApplicationTable applications={visibleApplications} />
       </section>
-
     </div>
-  )
+  );
 }
 
 export default ApplicationsPage;

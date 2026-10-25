@@ -11,7 +11,7 @@ export type ApplicationStatus=
 export type ApplicationTab = "All" | "Active" | "Archived";
 
 export interface Application {
-    id:number,
+    id:string,
     companyName: string;
     jobTitle: string;
     location:string;
@@ -19,6 +19,7 @@ export interface Application {
     salaryRange?: string;
     status: ApplicationStatus;
     listingUrl?: string;
+    jobDescription?: string;
     notes?: string;
 }
 
@@ -31,6 +32,7 @@ export type ApplicationFormValues={
     appliedOn: string;
     status: ApplicationStatus;
     listingUrl: string;
+    jobDescription: string;
     notes: string;
 }
 

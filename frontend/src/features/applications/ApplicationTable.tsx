@@ -1,5 +1,6 @@
 import type { Application} from "./type";
 import Badge, { type BadgeTone } from "../../Components/UI/Badge";
+import { Link, useNavigate } from "react-router-dom";
 
 type ApplicationTableProps={
     applications: Application[];
@@ -15,6 +16,7 @@ const statusTones: Record<Application["status"], BadgeTone> = {
   "No Response": "gray",
 };
 function ApplicationTable({applications}:ApplicationTableProps){
+    const navigate=useNavigate();
     return(
         <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white">
             <table className="w-full min-w-[900px] text-left text-[13px]">
@@ -33,6 +35,7 @@ function ApplicationTable({applications}:ApplicationTableProps){
                     {applications.map((app)=>(
                         <tr
                             key={app.id}
+                            onClick={()=>navigate(`/applications/${app.id}/edit`)}
                             className="transition-colors hover:bg-gray-50"
                         >
                             <td className="px-4 py-3 font-medium text-gray-900">
@@ -40,8 +43,13 @@ function ApplicationTable({applications}:ApplicationTableProps){
                                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-50 font-semibold text-indigo-600">
                                     {app.companyName.charAt(0).toUpperCase()}
                                 </span>
-
-                                {app.companyName}
+                                <Link
+                                    to={`/applications/${app.id}/edit`}
+                                    onClick={(event) => event.stopPropagation()}
+                                    className="rounded hover:text-indigo-600 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300"
+                                >
+                                    {app.companyName}
+                                </Link>
                                 </div>
                             </td>
 
