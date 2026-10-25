@@ -46,22 +46,6 @@ function AddApplicationPage() {
                     Applications
                 </Link>
 
-                <svg
-                    aria-hidden="true"
-                    className="h-4 w-4 text-subtle"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                >
-                    <path d="m9 18 6-6-6-6" />
-                </svg>
-
-                <span aria-current="page" className="text-muted">
-                    New application
-                </span>
                 </nav>
             <div>
                 <h1 className="text-3xl font-semibold tracking-tight text-gray-900">Add application</h1>
