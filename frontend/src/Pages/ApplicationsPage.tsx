@@ -5,6 +5,8 @@ import ApplicationTable from "../features/applications/ApplicationTable";
 import React, { useState } from "react"; //Stores values that change as the user interacts with the page.
 import type { Application, ApplicationTab } from "../features/applications/type";
 import ApplicationFilters from "../features/applications/ApplicationFilters"; //Displays the tabs and counts.
+import Button from "../Components/UI/Button";
+import { useNavigate } from "react-router-dom";
 
 const archivedStatuses = new Set(["Rejected", "Withdrawn", "No Response"]);
 
@@ -13,6 +15,7 @@ function isArchived(application: Application): boolean {
 }
 
 function ApplicationsPage(): React.JSX.Element {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<ApplicationTab>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All statuses");
@@ -48,15 +51,20 @@ function ApplicationsPage(): React.JSX.Element {
 
   return (
     <div className="space-y-6">
+      <div className="flex items-center justify-between gap-6">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-gray-900">
+        <h1 className="text-3xl font-semibold tracking-tight text-gray-900">
           Your next chapter, organized.
         </h1>
 
-        <p className="mt-1.5 text-sm text-gray-500">
+        <p className="mt-2 text-sm text-gray-500">
           Every opportunity, every next step. No spreadsheet required.
         </p>
       </div>
+
+      <Button onClick={() => navigate("/applications/add")}>+ Add application</Button>
+    </div>
+      
 
 
       <section className="space-y-5" aria-label="Your applications">
