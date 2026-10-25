@@ -28,7 +28,7 @@ function ApplicationFilters({
           <button
             key={tab}
             aria-selected={selected}
-            className={`-mb-px inline-flex shrink-0 items-center gap-2 border-b-2 px-1 pb-3 pt-1 text-xs font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:text-sm ${
+            className={`cursor-pointer -mb-px inline-flex shrink-0 items-center gap-2 border-b-2 px-1 pb-3 pt-1 text-xs font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:text-sm ${
               selected
                 ? "border-indigo-600 text-indigo-600"
                 : "border-transparent text-gray-600 hover:border-gray-300 hover:text-gray-900"

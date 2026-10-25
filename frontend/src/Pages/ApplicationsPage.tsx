@@ -82,7 +82,7 @@ function ApplicationsPage(): React.JSX.Element {
           </p>
         </div>
 
-        <Button onClick={() => navigate("/applications/add")}>
+        <Button className="cursor-pointer" onClick={() => navigate("/applications/add")}>
           + Add application
         </Button>
       </div>
@@ -125,7 +125,7 @@ function ApplicationsPage(): React.JSX.Element {
           </label>
           <select
             id="application-status-filter"
-            className="min-w-44 rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-700 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+            className="cursor-pointer min-w-44 rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-700 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
             onChange={(event) => setStatusFilter(event.target.value)}
             value={statusFilter}
           >
@@ -140,7 +140,7 @@ function ApplicationsPage(): React.JSX.Element {
           </label>
           <select
             id="application-sort-order"
-            className="min-w-44 rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-700 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+            className="cursor-pointer min-w-44 rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-700 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
             onChange={(event) =>
               setSortOrder(event.target.value as "newest" | "oldest")
             }
