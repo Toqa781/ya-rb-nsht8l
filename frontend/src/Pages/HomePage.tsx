@@ -10,6 +10,11 @@ import { Link} from "react-router-dom";
     title:"Never miss a deadline",
     description:"Stay on top of assesments, interviews, reminders, and important folllow-ups",  
    },
+   {
+    number:"03",
+    title:"See your progress",
+    description:"Track job search statistics, progress, and upcoming tasks to stay organized and focused",
+   }
  ];
 
  function HomePage() {
