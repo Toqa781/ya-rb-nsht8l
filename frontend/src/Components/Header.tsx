@@ -2,7 +2,8 @@ import { NavLink, useLocation } from "react-router-dom";
 import { workspaceNavigation } from "./Navigation";
 
 const pageNames: Record<string, string> = {
-  "/": "Display",
+  "/": "Home",
+  "/display": "Display",
   "/dashboard": "Dashboard",
   "/applications": "Applications",
   "/applications/add": "Add Application",
