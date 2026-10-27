@@ -1,28 +1,26 @@
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import { workspaceNavigation } from "./Navigation";
 
-// Map URLs to page names
 const pageNames: Record<string, string> = {
-  "/": "Display",
+  "/": "Home",
+  "/display": "Display",
   "/dashboard": "Dashboard",
   "/applications": "Applications",
+  "/applications/add": "Add Application",
   "/tasks": "Tasks",
   "/settings": "Settings",
 };
 
-function Header() {
-
-  // Get current URL
+export default function Header() {
   const location = useLocation();
 
-  // Find the corresponding page name
   const currentPage =
-    pageNames[location.pathname] ?? "Workspace";
+    pageNames[location.pathname] ??
+    (location.pathname.startsWith("/applications/")
+      ? "Applications"
+      : "Workspace");
 
-  // Get current date
-  const today = new Date();
-
-  // Format date: Monday, October 19, 2026
-  const formattedDate = today.toLocaleDateString("en-US", {
+  const formattedDate = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     month: "long",
     day: "numeric",
@@ -30,67 +28,100 @@ function Header() {
   });
 
   return (
-    <header className="flex h-20 items-center justify-between border-b border-gray-200 bg-white px-8">
-
-      
-      <nav
-        aria-label="Breadcrumb"
-        className="flex items-center gap-3 text-sm"
-      >
-        <span className="text-gray-400">
-          Workspace
-        </span>
-
-        <span className="text-gray-300" aria-hidden="true">
-          &gt;
-        </span>
-
-        <span
-          className="font-semibold text-gray-900"
-          aria-current="page"
+    <header className="sticky top-0 z-30 border-b border-line bg-surface">
+      {/* Desktop */}
+      <div className="hidden h-20 items-center justify-between px-8 lg:flex">
+        <nav
+          aria-label="Breadcrumb"
+          className="flex items-center gap-3 text-sm"
         >
-          {currentPage}
-        </span>
-      </nav>
+          <span className="text-muted">Workspace</span>
+          <span aria-hidden="true" className="text-subtle">
+            &gt;
+          </span>
+          <span aria-current="page" className="font-semibold text-ink">
+            {currentPage}
+          </span>
+        </nav>
 
-      
-      <div className="flex items-center gap-6">
+        <div className="flex items-center gap-5">
+          <span className="text-sm text-muted">
+            {formattedDate}
+          </span>
 
-        
-        <span className="text-sm text-gray-500">
-          {formattedDate}
-        </span>
+          <NotificationButton />
+        </div>
+      </div>
 
-        
-        <button
-          type="button"
-          aria-label="Notifications"
-          className="relative rounded-lg p-2 text-gray-500 transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(165,180,252)]"
+      {/* Tablet and mobile */}
+      <div className="flex min-h-16 items-center justify-between gap-3 px-4 sm:px-6 lg:hidden">
+        <NavLink
+          to="/dashboard"
+          className="flex shrink-0 items-center gap-2"
         >
-          {/* Bell Icon */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary font-bold text-white">
+            T
+          </span>
+
+          <span className="text-lg font-bold text-ink">
+            Trackora
+          </span>
+        </NavLink>
+
+        {/* Tablet navigation */}
+        <nav
+          aria-label="Tablet navigation"
+          className="hidden items-center gap-1 sm:flex"
+        >
+          {workspaceNavigation.map((item) => (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) =>
+                `rounded-lg px-3 py-3 text-sm font-medium transition-colors ${
+                  isActive
+                    ? "bg-primary-light text-primary"
+                    : "text-muted hover:bg-page"
+                }`
+              }
+            >
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="flex shrink-0 items-center gap-2">
+          <div
+            aria-label="Alex Chen"
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-light text-xs font-semibold text-primary"
           >
-            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
-            <path d="M10 21h4" />
-          </svg>
-
-          
-          <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-indigo-500" />
-        </button>
-
+            AC
+          </div>
+        </div>
       </div>
     </header>
   );
 }
 
-export default Header;
+function NotificationButton() {
+  return (
+    <button
+      type="button"
+      aria-label="Notifications"
+      className="rounded-lg p-2 text-muted transition-colors hover:bg-page focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+    >
+      <svg
+        aria-hidden="true"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+      >
+        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+        <path d="M10 21h4" />
+      </svg>
+    </button>
+  );
+}

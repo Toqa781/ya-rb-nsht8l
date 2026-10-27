@@ -1,9 +1,10 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 // Navigation items
 const navItems = [
-  { name: "Display", path: "/" },
-    { name: "Dashboard", path: "/dashboard" },
+  { name: "Home", path: "/" },
+  { name: "Display", path: "/display" },
+  { name: "Dashboard", path: "/dashboard" },
   { name: "Applications", path: "/applications" },
   { name: "Tasks", path: "/tasks" },
   { name: "Settings", path: "/settings" },
@@ -11,10 +12,14 @@ const navItems = [
 
 function Sidebar() {
   return (
-    <aside className="fixed top-0 left-0 flex h-screen w-64 flex-col border-r border-line bg-surface">
+    <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col overflow-y-auto border-r border-line bg-surface lg:flex">
 
       {/* Logo */}
-      <div className="flex h-20 items-center gap-3 px-6">
+       <Link
+          to="/"
+          aria-label="Go to Trackora homepage"
+          className="flex h-20 items-center gap-3 px-6 transition-opacity hover:opacity-80"
+       >
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-xl font-bold text-white">
           T
         </div>
@@ -22,7 +27,7 @@ function Sidebar() {
         <span className="text-xl font-bold tracking-tight text-ink">
           Trackora
         </span>
-      </div>
+      </Link>
 
       {/* Workspace Label */}
       <div className="mt-6 px-6">

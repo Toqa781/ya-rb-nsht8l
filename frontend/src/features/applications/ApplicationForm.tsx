@@ -6,6 +6,7 @@ import Input from "../../Components/UI/Input";
 import { statusOptions, type ApplicationFormValues } from "./type";
 import { statusTones } from "./statusTones";
 
+
 type ApplicationFormProps = {
   initialValues: ApplicationFormValues;
   onSubmit: (values: ApplicationFormValues) => void;
