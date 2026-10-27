@@ -1,3 +1,4 @@
+import HomePage from "./Pages/HomePage";
 import MainLayout from "./Components/MainLayout";
 import Display from "./Pages/Display";
 import DashboardPage from "./Pages/DashboardPage";
@@ -14,10 +15,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route element={<MainLayout />}>
-          <Route path="/" element={<Display />} />
+          <Route path="/display" element={<Display />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/applications" element={<ApplicationsPage />} />
           <Route path="/applications/:id/edit" element={<EditApplicationPage/>}/>
