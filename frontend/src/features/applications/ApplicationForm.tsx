@@ -1,20 +1,10 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import Button from "../../Components/UI/Button";
 import Card from "../../Components/UI/Card";
-import Badge, {type BadgeTone} from "../../Components/UI/Badge";
+import Badge from "../../Components/UI/Badge";
 import Input from "../../Components/UI/Input";
 import { statusOptions, type ApplicationFormValues } from "./type";
-
-const statusTones: Record<ApplicationFormValues["status"], BadgeTone> = {
-  Applied: "blue",
-  Interview: "amber",
-  Assessment: "purple",
-  Offer: "green",
-  Rejected: "red",
-  Saved: "gray",
-  Withdrawn: "gray",
-  "No Response": "gray",
-};
+import { statusTones } from "./statusTones";
 
 type ApplicationFormProps = {
   initialValues: ApplicationFormValues;
