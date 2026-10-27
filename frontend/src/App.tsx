@@ -10,6 +10,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./Pages/LoginPage";
 import RegisterPage from "./Pages/RegisterPage";
 import EditApplicationPage from "./Pages/EditApplicationPage"
+import ApplicationDetailsPage from "./Pages/ApplicationDetailsPage"
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/tasks" element={<TasksPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/applications/add" element={<AddApplicationPage />}/>
+          <Route path="/applications/:id/details" element={<ApplicationDetailsPage/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

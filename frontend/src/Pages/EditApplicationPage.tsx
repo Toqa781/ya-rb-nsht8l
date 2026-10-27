@@ -31,7 +31,7 @@ function EditApplicationPage() {
     saveApplications(
         applications.map((item)=> (item.id==updated.id?updated:item)),
     );
-    navigate("/applications");
+    navigate(`/applications/${application!.id}/details`);
   }
   return(
     <div className="space-y-6">
@@ -83,7 +83,7 @@ function EditApplicationPage() {
                 key={application.id}
                 initialValues={applicationToFormValues(application)}
                 onSubmit={handleSubmit}
-                onCancel={()=>navigate("/applications")}
+                onCancel={()=>navigate(`/applications/${application.id}/details`)}
                 submitLabel="Save Changes"
             />
             <ApplicationTips/>

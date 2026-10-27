@@ -1,20 +1,12 @@
 import type { Application} from "./type";
-import Badge, { type BadgeTone } from "../../Components/UI/Badge";
+import Badge from "../../Components/UI/Badge";
 import { Link, useNavigate } from "react-router-dom";
+import { statusTones } from "./statusTones";
 
 type ApplicationTableProps={
     applications: Application[];
 }
-const statusTones: Record<Application["status"], BadgeTone> = {
-  Applied: "blue",
-  Interview: "amber",
-  Assessment: "purple",
-  Offer: "green",
-  Rejected: "red",
-  Saved: "gray",
-  Withdrawn: "gray",
-  "No Response": "gray",
-};
+
 function ApplicationTable({applications}:ApplicationTableProps){
     const navigate=useNavigate();
     return(
@@ -35,7 +27,7 @@ function ApplicationTable({applications}:ApplicationTableProps){
                     {applications.map((app)=>(
                         <tr
                             key={app.id}
-                            onClick={()=>navigate(`/applications/${app.id}/edit`)}
+                            onClick={()=>navigate(`/applications/${app.id}/details`)}
                             className="transition-colors hover:bg-gray-50"
                         >
                             <td className="px-4 py-3 font-medium text-gray-900">
@@ -44,7 +36,7 @@ function ApplicationTable({applications}:ApplicationTableProps){
                                     {app.companyName.charAt(0).toUpperCase()}
                                 </span>
                                 <Link
-                                    to={`/applications/${app.id}/edit`}
+                                    to={`/applications/${app.id}/details`}
                                     onClick={(event) => event.stopPropagation()}
                                     className="rounded hover:text-indigo-600 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300"
                                 >
