@@ -11,7 +11,7 @@ const navItems = [
 
 function Sidebar() {
   return (
-    <aside className="fixed top-0 left-0 flex h-screen w-64 flex-col border-r border-line bg-surface">
+    <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col overflow-y-auto border-r border-line bg-surface lg:flex">
 
       {/* Logo */}
       <div className="flex h-20 items-center gap-3 px-6">
